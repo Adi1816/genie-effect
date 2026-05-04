@@ -1,0 +1,68 @@
+{
+  "name": "@adi1816/genie-effect",
+  "version": "0.1.0",
+  "description": "A fast macOS-style genie minimize effect for React and vanilla DOM apps.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Aditya Srivastava",
+  "homepage": "https://github.com/Adi1816/genie-effect#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Adi1816/genie-effect.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Adi1816/genie-effect/issues"
+  },
+  "keywords": [
+    "react",
+    "genie",
+    "macos",
+    "animation",
+    "minimize",
+    "window",
+    "dock",
+    "ui",
+    "effect"
+  ],
+  "sideEffects": [
+    "./dist/styles.css"
+  ],
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "types": "./dist/index.d.ts",
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "typescript": "^5.8.0",
+    "vite": "^7.0.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node scripts/copy-css.mjs",
+    "demo": "npm --prefix examples/react-demo run dev",
+    "pack:dry": "npm pack --dry-run",
+    "prepublishOnly": "npm run typecheck && npm run build",
+    "typecheck": "tsc --noEmit"
+  }
+}

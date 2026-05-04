@@ -1,0 +1,21 @@
+.genie-effect-layer {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.genie-effect-panel {
+  position: fixed;
+  overflow: hidden;
+  pointer-events: none;
+  backface-visibility: hidden;
+  contain: layout paint;
+  transform-origin: top left;
+  will-change: transform, width, height, opacity, clip-path;
+}
+
+.genie-effect-panel > * {
+  pointer-events: none;
+  will-change: transform;
+}
