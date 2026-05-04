@@ -22,9 +22,10 @@ const dockRef = useRef<HTMLButtonElement>(null);
 const genie = useGenieEffect({ duration: 860 });
 
 function minimize() {
-  genie.run(windowRef, dockRef, {
-    onComplete: () => setOpen(false),
-  });
+genie.run(windowRef, dockRef, {
+  restoreSourceOnComplete: false,
+  onComplete: () => setOpen(false),
+});
 }
 ```
 
@@ -36,6 +37,7 @@ const commandButtonRef = useRef<HTMLButtonElement>(null);
 
 genie.run(windowRef, commandButtonRef, {
   direction: "up",
+  restoreSourceOnComplete: false,
   onComplete: () => setOpen(false),
 });
 ```
@@ -48,6 +50,7 @@ const launcher = document.querySelector(".launcher") as HTMLElement;
 
 runGenieEffect(panel, launcher, {
   duration: 760,
+  restoreSourceOnComplete: false,
   onComplete: () => panel.classList.add("is-hidden"),
 });
 ```

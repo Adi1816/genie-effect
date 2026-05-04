@@ -166,8 +166,10 @@ export function runGenieEffect(source, target, options = {}) {
             window.cancelAnimationFrame(frameId);
         }
         removeLayer(layer.layer);
-        source.style.opacity = originalOpacity;
-        source.style.pointerEvents = originalPointerEvents;
+        if (state === "cancel" || options.restoreSourceOnComplete !== false) {
+            source.style.opacity = originalOpacity;
+            source.style.pointerEvents = originalPointerEvents;
+        }
         if (state === "complete") {
             options.onComplete?.();
         }

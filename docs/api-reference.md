@@ -51,6 +51,7 @@ type GenieEffectOptions = {
   layerParent?: HTMLElement;
   className?: string;
   hideSource?: boolean;
+  restoreSourceOnComplete?: boolean;
   reducedMotion?: boolean;
   onStart?: () => void;
   onUpdate?: (progress: number) => void;
@@ -80,6 +81,16 @@ Extra class added to the animation layer for advanced styling or debugging.
 `hideSource`
 
 Whether to hide the source during the animation. Default: `true`.
+
+`restoreSourceOnComplete`
+
+Whether to restore the source element's inline opacity and pointer-event styles
+after a successful animation. Default: `true`.
+
+Set this to `false` when your app will immediately unmount or keep the source
+hidden in `onComplete`, such as a window manager minimizing into a dock.
+Cancellation still restores the source so interrupted animations do not leave
+the element hidden.
 
 `reducedMotion`
 

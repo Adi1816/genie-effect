@@ -41,7 +41,7 @@ Every animation needs two things:
 
 The package temporarily hides the source element, creates one visual clone,
 animates that clone into the target, removes the clone, then restores the
-source element styles.
+source element styles unless you opt out for minimize-then-unmount flows.
 
 ## Basic Flow
 
@@ -52,6 +52,7 @@ source element styles.
 
 ```ts
 const controls = runGenieEffect(source, target, {
+  restoreSourceOnComplete: false,
   onComplete: () => {
     source.hidden = true;
   },
@@ -59,6 +60,9 @@ const controls = runGenieEffect(source, target, {
 
 await controls.finished;
 ```
+
+If your app does not hide or unmount the source in `onComplete`, leave
+`restoreSourceOnComplete` unset so the source is restored after the effect.
 
 ## Theme Inheritance
 

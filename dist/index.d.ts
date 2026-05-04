@@ -14,6 +14,7 @@ export type GenieEffectOptions = {
     layerParent?: HTMLElement;
     className?: string;
     hideSource?: boolean;
+    restoreSourceOnComplete?: boolean;
     reducedMotion?: boolean;
     onStart?: () => void;
     onUpdate?: (progress: number) => void;

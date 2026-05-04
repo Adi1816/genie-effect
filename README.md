@@ -44,6 +44,7 @@ export function DemoWindow() {
 
   function minimize() {
     genie.run(windowRef, dockRef, {
+      restoreSourceOnComplete: false,
       onComplete: () => setIsVisible(false),
     });
   }
@@ -76,6 +77,7 @@ const target = document.querySelector("#dock-icon") as HTMLElement;
 
 const controls = runGenieEffect(source, target, {
   duration: 860,
+  restoreSourceOnComplete: false,
   onComplete: () => {
     source.hidden = true;
   },

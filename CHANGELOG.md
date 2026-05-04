@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 This project follows semantic versioning.
 
+## 0.1.2 - 2026-05-04
+
+### Added
+
+- `restoreSourceOnComplete` option for minimize-then-unmount workflows
+- Documentation for preventing end-frame source flashes when hiding or unmounting after completion
+
 ## 0.1.1 - 2026-05-04
 
 ### Added

@@ -17,6 +17,7 @@ export type GenieEffectOptions = {
   layerParent?: HTMLElement;
   className?: string;
   hideSource?: boolean;
+  restoreSourceOnComplete?: boolean;
   reducedMotion?: boolean;
   onStart?: () => void;
   onUpdate?: (progress: number) => void;
@@ -252,8 +253,10 @@ export function runGenieEffect(
     }
 
     removeLayer(layer.layer);
-    source.style.opacity = originalOpacity;
-    source.style.pointerEvents = originalPointerEvents;
+    if (state === "cancel" || options.restoreSourceOnComplete !== false) {
+      source.style.opacity = originalOpacity;
+      source.style.pointerEvents = originalPointerEvents;
+    }
     if (state === "complete") {
       options.onComplete?.();
     } else {

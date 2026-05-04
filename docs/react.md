@@ -58,12 +58,16 @@ running and unmount it in `onComplete`.
 
 ```tsx
 genie.run(windowRef, dockRef, {
+  restoreSourceOnComplete: false,
   onComplete: () => setOpen(false),
 });
 ```
 
 If you unmount the source before running the effect, there is nothing left to
 clone.
+
+`restoreSourceOnComplete: false` prevents a one-frame flash in minimize/unmount
+workflows. Cancellation still restores the source element.
 
 ## Cancelling an Animation
 

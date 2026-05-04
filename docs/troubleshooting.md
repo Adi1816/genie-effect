@@ -17,9 +17,14 @@ Effect clone it first, then hide or unmount it in `onComplete`.
 
 ```ts
 genie.run(sourceRef, targetRef, {
+  restoreSourceOnComplete: false,
   onComplete: () => setOpen(false),
 });
 ```
+
+Use `restoreSourceOnComplete: false` for minimize-then-unmount flows. Without
+it, the package restores the original source element before your framework
+removes it, which can create a tiny end-frame flash.
 
 ## The Clone Has the Wrong Theme
 
