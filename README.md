@@ -2,9 +2,11 @@
 
 A fast macOS-style genie minimize effect for React and vanilla DOM apps.
 
-This package was built from a practical browser OS use case: make a window minimize into a dock button with a premium macOS-inspired pull, without creating dozens of cloned DOM slices that lag on real dashboards, iframes, and rich UI.
+Genie Effect was born inside a browser-based operating system UI, where windows
+needed to minimize into dock buttons with a premium pull while staying smooth
+around dashboards, iframes, glass panels, and rich React components.
 
-## Features
+## Highlights
 
 - macOS-like genie minimize motion
 - React hook and vanilla DOM API
@@ -21,13 +23,13 @@ This package was built from a practical browser OS use case: make a window minim
 npm install @adi1816/genie-effect
 ```
 
-Import the styles once:
+Import the styles once in your app:
 
 ```ts
 import "@adi1816/genie-effect/styles.css";
 ```
 
-## React Usage
+## Quick React Usage
 
 ```tsx
 import { useRef, useState } from "react";
@@ -38,25 +40,21 @@ export function DemoWindow() {
   const [isVisible, setIsVisible] = useState(true);
   const windowRef = useRef<HTMLDivElement>(null);
   const dockRef = useRef<HTMLButtonElement>(null);
-  const genie = useGenieEffect();
+  const genie = useGenieEffect({ duration: 860 });
 
-  async function minimize() {
-    const controls = genie.run(windowRef, dockRef, {
-      duration: 860,
+  function minimize() {
+    genie.run(windowRef, dockRef, {
       onComplete: () => setIsVisible(false),
     });
-
-    await controls?.finished;
   }
 
   return (
     <main data-genie-root>
       {isVisible ? (
-        <div ref={windowRef} className="window">
+        <section ref={windowRef} className="window">
           <button onClick={minimize}>Minimize</button>
           <h1>Workspace</h1>
-          <p>This panel will genie into the dock.</p>
-        </div>
+        </section>
       ) : null}
 
       <button ref={dockRef} onClick={() => setIsVisible(true)}>
@@ -67,7 +65,7 @@ export function DemoWindow() {
 }
 ```
 
-## Vanilla DOM Usage
+## Quick Vanilla Usage
 
 ```ts
 import { runGenieEffect } from "@adi1816/genie-effect";
@@ -86,66 +84,36 @@ const controls = runGenieEffect(source, target, {
 await controls.finished;
 ```
 
-## API
+## Documentation
 
-### `runGenieEffect(source, target, options)`
+- [Getting Started](./docs/getting-started.md)
+- [React Guide](./docs/react.md)
+- [Vanilla DOM Guide](./docs/vanilla.md)
+- [API Reference](./docs/api-reference.md)
+- [Examples](./docs/examples.md)
+- [Performance Notes](./docs/performance.md)
+- [Troubleshooting](./docs/troubleshooting.md)
+- [Contributing](./CONTRIBUTING.md)
+- [Changelog](./CHANGELOG.md)
 
-Runs the genie effect from a source element to a target element or rect.
+## Demo App
 
-```ts
-type GenieTarget =
-  | HTMLElement
-  | DOMRect
-  | {
-      left: number;
-      top: number;
-      width: number;
-      height: number;
-      right?: number;
-      bottom?: number;
-    };
+The repo includes a small Vite demo:
 
-type GenieEffectOptions = {
-  duration?: number;
-  direction?: "auto" | "up" | "down";
-  layerParent?: HTMLElement;
-  className?: string;
-  hideSource?: boolean;
-  reducedMotion?: boolean;
-  onStart?: () => void;
-  onUpdate?: (progress: number) => void;
-  onComplete?: () => void;
-  onCancel?: () => void;
-};
+```bash
+npm install
+npm run demo
 ```
 
-Returns:
+## How It Works
 
-```ts
-type GenieEffectControls = {
-  cancel: () => void;
-  finished: Promise<void>;
-};
-```
+The effect creates one temporary visual layer, clones the source element once,
+then animates a curved `clip-path` polygon and panel transform with
+`requestAnimationFrame`. This avoids the lag caused by cloning many horizontal
+DOM slices while still giving the minimize motion a real genie-like pull.
 
-`cancel()` cleans up the temporary layer and resolves `finished` without firing
-`onComplete`. Use `onCancel` if you need to respond to interrupted animations.
-
-### `useGenieEffect(defaultOptions?)`
-
-React hook wrapper around `runGenieEffect`.
-
-```ts
-const { run, cancel } = useGenieEffect({ duration: 860 });
-
-run(sourceRef, targetRef, {
-  onComplete: () => setMinimized(true),
-});
-```
-
-## Theme Inheritance
-
-If your source element depends on CSS variables from an app shell, add `data-genie-root` to the shell:
+If your source element depends on CSS variables from a shell, wrap the UI with
+`data-genie-root`. The temporary layer will mount there and inherit your theme.
 
 ```tsx
 <div data-genie-root className="app-shell">
@@ -153,45 +121,12 @@ If your source element depends on CSS variables from an app shell, add `data-gen
 </div>
 ```
 
-The temporary genie layer will be mounted inside that root, so the cloned visual panel inherits your colors, fonts, glass effects, and theme variables.
-
-You can also pass an explicit parent:
-
-```ts
-runGenieEffect(source, target, {
-  layerParent: document.querySelector(".app-shell") as HTMLElement,
-});
-```
-
-## Performance Notes
-
-The first prototype used many horizontal DOM slices to mimic the real macOS mesh deformation. It looked closer mathematically, but it lagged badly in real browser UI because every slice cloned the full window.
-
-This package uses a production-friendly version:
-
-- one visual clone
-- one animated panel
-- a curved `clip-path` polygon
-- `requestAnimationFrame`
-- cleanup after completion
-
-That keeps the premium genie feel while staying smooth enough for portfolio OS windows, dashboards, and app shells.
-
-## Publishing Checklist
-
-1. Create an npm account at npmjs.com if you do not already have one.
-2. Confirm the package name in `package.json`.
-   - If your npm username is not `adi1816`, change the name to `@your-npm-username/genie-effect`.
-   - Scoped public packages need `npm publish --access public`.
-3. Create a GitHub repo, for example `Adi1816/genie-effect`.
-4. Push this folder to GitHub.
-5. Run:
+## Maintainer Release Checklist
 
 ```bash
 npm install
 npm run typecheck
 npm run build
-npm login
 npm pack --dry-run
 npm publish --access public
 ```

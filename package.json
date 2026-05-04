@@ -1,6 +1,6 @@
 {
   "name": "@adi1816/genie-effect",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A fast macOS-style genie minimize effect for React and vanilla DOM apps.",
   "type": "module",
   "license": "MIT",
@@ -29,7 +29,10 @@
   ],
   "files": [
     "dist",
+    "docs",
     "src",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
     "README.md",
     "LICENSE"
   ],
